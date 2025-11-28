@@ -1,12 +1,7 @@
-
+"use client"
 import React from 'react'
+import { Dashboard } from '@/components/dashboard/Dashboard';
 
-function page() {
-    return (
-        <div>
-            Page
-        </div>
-    )
+export default function DashboardPage() {
+    return <Dashboard />;
 }
-
-export default page;
