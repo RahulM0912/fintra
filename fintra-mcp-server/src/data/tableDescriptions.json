@@ -1,0 +1,60 @@
+
+{
+    "transactions": {
+      "description": "Stores financial transaction records for users. Each row represents a single transaction (expense or income) with timestamps, category linkage, amount, description and type. Useful for building ledgers, summaries and reports per user and per category.",
+      "columns": [
+        "id (string) primary key",
+        "created_at (timestamp)",
+        "updated_at (timestamp)",
+        "category_id (string) (Low Cardinality)",
+        "amount (number) (High Cardinality)",
+        "description (string) (High Cardinality)",
+        "date (date) (High Cardinality)",
+        "type (string) (Low Cardinality) [expense | income | transfer | adjustment]",
+        "category_icon (string) (Low Cardinality)",
+        "user_id (string) foreign key references users(id)"
+      ]
+    },
+    "categories": {
+      "description": "Defines user-specific categories for transactions (for example: groceries, salary, utilities). Categories help classify transactions and are linked to users so each user can have a custom set.",
+      "columns": [
+        "id (string) primary key",
+        "created_at (timestamp)",
+        "name (string) (Low Cardinality)",
+        "icon (string) (Low Cardinality)",
+        "type (string) (Low Cardinality) [expense | income | transfer]",
+        "user_id (string) foreign key references users(id)"
+      ]
+    },
+    "user_settings": {
+      "description": "Holds per-user preferences and settings such as default currency. Each record maps to a single user and stores lightweight configuration values used by the app.",
+      "columns": [
+        "id (string) primary key",
+        "currency (string) (Low Cardinality) [USD | EUR | GBP | INR | ...]",
+        "user_id (string) foreign key references users(id)",
+        "created_at (timestamp)"
+      ]
+    },
+    "month_history": {
+      "description": "Aggregated monthly history for a user. Each entry represents summarized values for a particular day/month/year combination (often used for charts and quick lookups). Typically used to display trends and monthly rollups.",
+      "columns": [
+        "id (string) primary key",
+        "user_id (string) foreign key references users(id)",
+        "day (number) (Low Cardinality) [1..31]",
+        "month (number) (Low Cardinality) [1..12]",
+        "year (number) (High Cardinality)",
+        "income (number) (High Cardinality)",
+        "expense (number) (High Cardinality)"
+      ]
+    },
+    "year_history": {
+      "description": "Yearly history summary per user. Each record aggregates income and expense for a given month and year or provides yearly rollups useful for annual reports and comparisons.",
+      "columns": [
+        "id (string) primary key",
+        "user_id (string) foreign key references users(id)",
+        "month (number) (Low Cardinality) [1..12]",
+        "year (number) (High Cardinality)",
+        "income (number) (High Cardinality)",
+        "expense (number) (High Cardinality)"
+      ]
+    }}

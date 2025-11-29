@@ -1,0 +1,45 @@
+{
+    "transactions": {
+      "id": "Unique identifier for the transaction",
+      "created_at": "Timestamp when the transaction record was created",
+      "updated_at": "Timestamp when the transaction record was last updated",
+      "category_id": "Category name or id associated with the transaction",
+      "amount": "Monetary value of the transaction (positive for income, negative or type indicates expense)",
+      "description": "Free-text description or note for the transaction",
+      "date": "Date when the transaction occurred",
+      "type": "Transaction classification (expense, income, transfer, etc.)",
+      "category_icon": "Icon identifier for the associated category",
+      "user_id": "Identifier of the user who owns this transaction"
+    },
+    "categories": {
+      "id": "Unique identifier for the category",
+      "created_at": "Timestamp when the category was created",
+      "name": "Human-readable category name",
+      "icon": "Icon identifier or glyph name for UI display",
+      "type": "Category kind (expense, income, transfer)",
+      "user_id": "Identifier of the user who created/owns this category"
+    },
+    "user_settings": {
+      "id": "Unique identifier for the userSetting record",
+      "currency": "Default currency code for the user (e.g., USD, EUR)",
+      "user_id": "Identifier of the user these settings belong to",
+      "created_at": "Timestamp when the user settings record was created"
+    },
+    "month_history": {
+      "id": "Unique identifier for the monthly history record",
+      "user_id": "Identifier of the user this history belongs to",
+      "day": "Day of month this record summarizes (1..31)",
+      "month": "Month number (1..12)",
+      "year": "Year (e.g., 2025)",
+      "income": "Total income amount for the period represented",
+      "expense": "Total expense amount for the period represented"
+    },
+    "year_history": {
+      "id": "Unique identifier for the yearly history record",
+      "user_id": "Identifier of the user this history belongs to",
+      "month": "Month number (1..12) for which the summary is recorded",
+      "year": "Year (e.g., 2025)",
+      "income": "Total income for the month/year combination",
+      "expense": "Total expense for the month/year combination"
+    }
+  }
