@@ -182,8 +182,15 @@ function getResponseJsonSchema(): any {
                                 type: 'object',
                                 properties: {
                                     title: { type: 'string' },
-                                    labels: { type: 'string' },
-                                    data: { type: 'string' },
+                                    labels: { 
+                                      type: 'array',
+                                      items: { type: 'string' }
+                                    },
+
+                                    data: { 
+                                      type: 'array',
+                                      items: { type: 'number' } // or string if needed
+                                    },
                                     groupBy: { type: 'string' },
                                     onHover: { type: 'string' }
                                 },

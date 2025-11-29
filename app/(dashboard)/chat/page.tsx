@@ -350,8 +350,9 @@ type GraphType =
 
 function parseGraphData(graphs: any) {
   try {
-    const labels: string[] = JSON.parse(graphs.labels || "[]");
-    const values: number[] = JSON.parse(graphs.data || "[]");
+    console.log(graphs)
+    const labels: string[] = graphs.labels || [];
+    const values: number[] = graphs.data || [];
 
     const data = labels.map((label, i) => ({
       label,
