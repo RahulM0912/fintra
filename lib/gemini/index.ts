@@ -17,6 +17,15 @@ const transport = new StreamableHTTPClientTransport(
   new URL("http://localhost:8080/mcp"),
 )
 
+let mcpConnected = false;
+
+async function ensureMcpConnected() {
+  if (!mcpConnected) {
+    await mcpClient.connect(transport);
+    mcpConnected = true;
+  }
+}
+
 export async function processQuery(
   query: string,
   chatId: string,
@@ -24,7 +33,7 @@ export async function processQuery(
   modelKey?: string
 ): Promise<ProcessQueryResult> {
 
-  await mcpClient.connect(transport)
+  await ensureMcpConnected();
 
   if(!modelKey) {
     modelKey = 'models/gemini-2.5-flash'
