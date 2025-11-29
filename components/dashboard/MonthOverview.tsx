@@ -10,46 +10,39 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-interface HistoryChartProps {
+interface MonthOverviewProps {
   data: Array<{
-    month: string | number;
-    year: string|number;
+    day: number;
     income: number;
     expense: number;
   }>;
-  title: string;
-  isMonthly?: boolean;
+  loading?: boolean;
 }
 
-const MONTH_NAMES = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-];
+export function MonthOverview({ data, loading = false }: MonthOverviewProps) {
+  if (loading) {
+    return (
+      <div className="border border-gray-800 bg-black/40 rounded-lg p-6 backdrop-blur-sm">
+        <h2 className="text-xl font-bold text-white mb-4">Month Overview</h2>
+        <div className="h-72 rounded-md bg-gray-800/30 animate-pulse" />
+      </div>
+    );
+  }
 
-export function HistoryChart({ data, title, isMonthly = true }: HistoryChartProps) {
-  const formattedData = data.map((item) => ({
-    ...item,
-    month: isMonthly ? MONTH_NAMES[Number(item.month) - 1] : item.month,
+  const chartData = data.map((item) => ({
+    day: `Day ${item.day}`,
+    income: item.income,
+    expense: item.expense,
   }));
 
   return (
     <div className="border border-gray-800 bg-black/40 rounded-lg p-6 backdrop-blur-sm">
-      <h2 className="text-xl font-bold text-white mb-4">{title}</h2>
+      <h2 className="text-xl font-bold text-white mb-4">Month Overview</h2>
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={formattedData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+        <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
           <XAxis
-            dataKey="month"
+            dataKey="day"
             stroke="rgba(255,255,255,0.5)"
             style={{ fontSize: '12px' }}
           />

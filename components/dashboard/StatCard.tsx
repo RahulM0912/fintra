@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatCurrency } from '@/lib/utils';
 import { ArrowUpRight, ArrowDownLeft } from 'lucide-react';
 
 interface StatCardProps {
@@ -7,9 +8,10 @@ interface StatCardProps {
   icon: React.ReactNode;
   trend?: number;
   color: 'income' | 'expense' | 'balance';
+  currency: string;
 }
 
-export function StatCard({ title, amount, icon, trend, color }: StatCardProps) {
+export function StatCard({ title, amount, icon, trend, color,currency }: StatCardProps) {
   const colorClasses = {
     income: 'border-emerald-500/30 bg-emerald-500/10',
     expense: 'border-rose-500/30 bg-rose-500/10',
@@ -29,7 +31,7 @@ export function StatCard({ title, amount, icon, trend, color }: StatCardProps) {
           <p className="text-gray-400 text-sm mb-2">{title}</p>
           <div className="flex items-baseline gap-2">
             <h3 className={`text-3xl font-bold ${textColors[color]}`}>
-              €{amount.toLocaleString('de-DE', { minimumFractionDigits: 2 })}
+              {formatCurrency(amount, currency)}
             </h3>
             {trend !== undefined && (
               <div className={`flex items-center gap-1 text-sm ${trend >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>

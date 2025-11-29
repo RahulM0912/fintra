@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatCurrency } from '@/lib/utils';
 import {
   PieChart,
   Pie,
@@ -11,6 +12,7 @@ interface CategoryChartProps {
   data: Record<string, number>;
   title: string;
   type: 'income' | 'expense';
+  currency: string;
 }
 
 const COLORS = {
@@ -18,7 +20,7 @@ const COLORS = {
   expense: ['#f43f5e', '#fb923c', '#eab308', '#ef4444', '#d946ef', '#fa8072'],
 };
 
-export function CategoryChart({ data, title, type }: CategoryChartProps) {
+export function CategoryChart({ data, title, type, currency }: CategoryChartProps) {
   const chartData = Object.entries(data).map(([category, amount]) => ({
     name: category.charAt(0).toUpperCase() + category.slice(1),
     value: Math.round(amount * 100) / 100,
@@ -77,7 +79,7 @@ export function CategoryChart({ data, title, type }: CategoryChartProps) {
               }}
             />
             <span className="text-gray-300">{item.name}</span>
-            <span className="text-gray-500 ml-auto">€{item.value.toFixed(2)}</span>
+            <span className="text-gray-500 ml-auto">{formatCurrency(item.value, currency)}</span>
           </div>
         ))}
       </div>

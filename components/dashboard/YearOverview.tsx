@@ -10,15 +10,13 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-interface HistoryChartProps {
+interface YearOverviewProps {
   data: Array<{
-    month: string | number;
-    year: string|number;
+    month: number;
     income: number;
     expense: number;
   }>;
-  title: string;
-  isMonthly?: boolean;
+  loading?: boolean;
 }
 
 const MONTH_NAMES = [
@@ -36,17 +34,40 @@ const MONTH_NAMES = [
   'Dec',
 ];
 
-export function HistoryChart({ data, title, isMonthly = true }: HistoryChartProps) {
-  const formattedData = data.map((item) => ({
-    ...item,
-    month: isMonthly ? MONTH_NAMES[Number(item.month) - 1] : item.month,
+export function YearOverview({ data, loading = false }: YearOverviewProps) {
+  if (loading) {
+    return (
+      <div className="border border-gray-800 bg-black/40 rounded-lg p-6 backdrop-blur-sm">
+        <h2 className="text-xl font-bold text-white mb-4">Year Overview</h2>
+        <div className="h-72 rounded-md bg-gray-800/30 animate-pulse" />
+      </div>
+    );
+  }
+
+  const chartData = data.map((item) => ({
+    month: MONTH_NAMES[item.month - 1],
+    income: Number(item.income) || 0,
+    expense: Number(item.expense) || 0,
   }));
+
+  console.log('YearOverview chartData:', chartData);
+
+  if (!data || data.length === 0) {
+    return (
+      <div className="border border-gray-800 bg-black/40 rounded-lg p-6 backdrop-blur-sm">
+        <h2 className="text-xl font-bold text-white mb-4">Year Overview</h2>
+        <div className="h-72 flex items-center justify-center text-gray-400">
+          No year history data available
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="border border-gray-800 bg-black/40 rounded-lg p-6 backdrop-blur-sm">
-      <h2 className="text-xl font-bold text-white mb-4">{title}</h2>
+      <h2 className="text-xl font-bold text-white mb-4">Year Overview</h2>
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={formattedData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+        <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
           <XAxis
             dataKey="month"
